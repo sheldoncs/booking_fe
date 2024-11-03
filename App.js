@@ -1,20 +1,43 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import { createAppContainer } from "react-navigation";
+import { createStackNavigator } from "react-navigation-stack";
+import LoginScreen from "./src/screen/client/LoginScreen";
+import RegisterScreen from "./src/screen/client/RegisterScreen";
+import ForgotPasswordScreen from "./src/screen/client/ForgotPasswordScreen";
+import AppointmentManagerScreen from "./src/screen/client/AppointmentManagerScreen";
+import AppointmentScreen from "./src/screen/client/AppointmentScreen";
+import ServiceScreen from "./src/screen/client/ServiceScreen";
+import SummaryAppointmentScreen from "./src/screen/client/SummaryAppointmentScreen";
+import ConfirmAppointmentScreen from "./src/screen/client/ConfirmAppointmentScreen";
+import QRCodeScreen from "./src/screen/client/QRCodeScreen";
+import PaymentScreen from "./src/screen/client/PaymentScreen";
+import { Provider } from "./src/context/BookingContext";
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const navigator = createStackNavigator(
+  {
+    QRCode: QRCodeScreen,
+    Login: LoginScreen,
+    ForgotPassword: ForgotPasswordScreen,
+    Register: RegisterScreen,
+    AppointmentManager: AppointmentManagerScreen,
+    Appointment: AppointmentScreen,
+    Services: ServiceScreen,
+    Summary: SummaryAppointmentScreen,
+    Payment: PaymentScreen,
+    Confirm: ConfirmAppointmentScreen
   },
-});
+  {
+    initialRouteName: "Login",
+    defaultNavigationOptions: {
+      title: "Bookings"
+    }
+  }
+);
+const App = createAppContainer(navigator);
+
+export default () => {
+  return (
+    <Provider>
+      <App />
+    </Provider>
+  );
+};
